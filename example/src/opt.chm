@@ -1,0 +1,78 @@
+# CHEMSHELL OPTIMIZATION JOB
+# Sergi Ortiz @ UAB
+# 6 April 2025
+
+# variable definition
+global sys_name_id
+set frame <FRAME>
+
+set c_file      ${frame}_solv_cropped.c
+set prmtop_file ${frame}_solv_cropped_mod.prmtop
+set inpcrd_file ${frame}_solv_cropped.inpcrd
+set pdb_file    ${frame}_solv_cropped.pdb
+
+set structure_type rc
+set calculation_type opt
+set sys_name_id result_${calculation_type}_${structure_type}_${frame}
+
+
+# source active atoms and QM region
+source ./${frame}_solv.act_list
+source ./qm_list
+
+# source ChemShell modules
+source /shared/software/easybuild/common/software/Chemshell/3.7/src/interface_turbomole/turbomole.tcl
+source /shared/software/easybuild/common/software/Chemshell/3.7/src/interface_amber/parse_amber.tcl
+
+
+# generate a .c coordinate file from Amber inpcrd and prmtop files
+load_amber_coords inpcrd=${inpcrd_file} prmtop=${prmtop_file} coords=$c_file
+
+# define residues for HDLC (idk)
+set pdbresidues [ pdb_to_res "${pdb_file}" ]
+set fil [open "pdbresidues" {RDWR CREAT TRUNC}]
+puts $fil "set pdbresidues [ list $pdbresidues ]"
+close $fil
+
+
+# QM/MM optimization settings
+# ! Charge is set to 1?????
+# ! Mult is 6 Fe3+ spin alt
+dl-find coords=${c_file} \
+        result=${sys_name_id}.c \
+        residues= $pdbresidues \
+        coordinates= hdlc \
+        optimizer= lbfgs \
+        active_atoms= $act \
+        maxene= 100000 \
+        tolerance= 0.00045 \
+        maxstep= 0.1 \
+        lbfgs_mem= 1000 \
+        list_option= none \
+        microiterative= yes \
+        inner_residues= { 360 365 540 544 662 663 664 665 } \
+        theory= hybrid : [ list \
+                coupling= shift \
+                debug= no \
+                qm_region= $qm_list \
+                qm_theory= turbomole : [ list \
+                        hamiltonian= b3lyp \
+                        scftype= uhf \
+                        basisspec= { { lanl2dz fe } { 6-31g* { h c n o } } } \
+                        maxcyc= 1000 \
+                        charge= 1 \
+                        mult= 6 ] \
+                mm_theory= dl_poly : [ list \
+                        conn= $c_file \
+                        list_option= none \
+                        debug= no \
+                        scale14= [ list [ expr 1 /1.2 ] 0.5 ] \
+                        amber_prmtop_file=$prmtop_file ] \
+        ] \
+      
+# save resulting optimized structure as .pdb  
+read_pdb  file=${pdb_file} coords=dummy.coords
+write_pdb file=./${sys_name_id}.pdb coords=./${sys_name_id}.c
+
+times
+exit

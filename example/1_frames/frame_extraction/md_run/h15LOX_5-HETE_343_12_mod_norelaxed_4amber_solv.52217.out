@@ -1,0 +1,71 @@
+step 1	 Starting first minimization step	 @ Sun Mar 30 22:43:32 CEST 2025
+
+step 1	 Finished first minimization step	 @ Sun Mar 30 22:43:42 CEST 2025
+step 2	 Starting first heating step	 @ Sun Mar 30 22:43:42 CEST 2025
+
+step 2	 Finished first heating step	 @ Sun Mar 30 23:02:36 CEST 2025
+step 3	 Starting first NPT step	 @ Sun Mar 30 23:02:38 CEST 2025
+
+step 3	 Finished first NPT step	 @ Sun Mar 30 23:12:11 CEST 2025
+step 4	 Starting second NPT step	 @ Sun Mar 30 23:12:13 CEST 2025
+
+step 4	 Finished second NPT step	 @ Sun Mar 30 23:31:19 CEST 2025
+step 5	 Starting second minimization step	 @ Sun Mar 30 23:31:24 CEST 2025
+
+step 5	 Finished second minimization step	 @ Sun Mar 30 23:31:34 CEST 2025
+step 6	 Starting third NPT step	 @ Sun Mar 30 23:31:39 CEST 2025
+
+step 6	 Finished third NPT step	 @ Sun Mar 30 23:41:02 CEST 2025
+step 7	 Starting fourth NPT step	 @ Sun Mar 30 23:41:08 CEST 2025
+
+step 7	 Finished fourth NPT step	 @ Sun Mar 30 23:50:35 CEST 2025
+step 8	 Starting fifth NPT step	 @ Sun Mar 30 23:50:42 CEST 2025
+
+step 8	 Finished fifth NPT step	 @ Mon Mar 31 00:09:34 CEST 2025
+step 9	 Starting sixth NPT step	 @ Mon Mar 31 00:09:44 CEST 2025
+
+step 9	 Finished sixth NPT step	 @ Mon Mar 31 00:28:50 CEST 2025
+step 10	 Starting NVT equilibration	 @ Mon Mar 31 00:29:02 CEST 2025
+
+step 10	 Finished NVT equilibration	 @ Mon Mar 31 00:54:39 CEST 2025
+Starting NVT production	 @ Mon Mar 31 00:55:05 CEST 2025
+
+Finished first 10ns of NVT production	 @ Mon Mar 31 01:46:17 CEST 2025
+Step 2 of 25 of production done
+Finished 10ns of NVT production	 @ Mon Mar 31 01:46:29 CEST 2025
+
+Finished 10ns of NVT production	 @ Mon Mar 31 02:38:06 CEST 2025
+Step 3 of 25 of production done
+Finished 10ns of NVT production	 @ Mon Mar 31 02:38:29 CEST 2025
+
+Finished 10ns of NVT production	 @ Mon Mar 31 03:30:05 CEST 2025
+Step 4 of 25 of production done
+Finished 10ns of NVT production	 @ Mon Mar 31 03:30:40 CEST 2025
+
+Finished 10ns of NVT production	 @ Mon Mar 31 04:22:12 CEST 2025
+Step 5 of 25 of production done
+Finished 10ns of NVT production	 @ Mon Mar 31 04:22:58 CEST 2025
+
+Finished 10ns of NVT production	 @ Mon Mar 31 05:14:33 CEST 2025
+Step 6 of 25 of production done
+Finished 10ns of NVT production	 @ Mon Mar 31 05:15:30 CEST 2025
+
+Finished 10ns of NVT production	 @ Mon Mar 31 06:07:00 CEST 2025
+Step 7 of 25 of production done
+Finished 10ns of NVT production	 @ Mon Mar 31 06:08:10 CEST 2025
+
+Finished 10ns of NVT production	 @ Mon Mar 31 06:59:39 CEST 2025
+Step 8 of 25 of production done
+Finished 10ns of NVT production	 @ Mon Mar 31 07:01:00 CEST 2025
+
+Finished 10ns of NVT production	 @ Mon Mar 31 07:52:35 CEST 2025
+Step 9 of 25 of production done
+Finished 10ns of NVT production	 @ Mon Mar 31 07:54:08 CEST 2025
+
+Finished 10ns of NVT production	 @ Mon Mar 31 08:45:47 CEST 2025
+Step 10 of 25 of production done
+Finished 10ns of NVT production	 @ Mon Mar 31 08:47:31 CEST 2025
+
+Finished 10ns of NVT production	 @ Mon Mar 31 09:39:04 CEST 2025
+Step 11 of 25 of production done
+Finished 10ns of NVT production	 @ Mon Mar 31 09:41:00 CEST 2025
