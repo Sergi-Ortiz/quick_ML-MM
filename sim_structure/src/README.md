@@ -1,1 +1,0 @@
-All the QM/MM or ML/MM scripts must be stored in this directory, depending on the task. 

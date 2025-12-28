@@ -1,0 +1,7 @@
+# QM/MM TS optimization job setup procedure
+
+Once the scan has finished, the profile must first be visualized with `scan_plot.py`. This script will also print the maximum energy structure point. This point structure `scan_rc_<FRAME>_<POINT>.pdb` must be copied to `4_TS_opt` directory and `<POINT>` in `ts_opt.chm` (variable definition section) must be changed manually. 
+
+- Copy scan_rc_<FRAME>_<POINT>.c and scan_rc_<FRAME>_<POINT>.pdb to the TS directory, exactly as done with the optimization step. 
+
+# once this is done, the job is ready to be sbatch'ed!
