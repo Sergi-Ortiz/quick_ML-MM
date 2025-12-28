@@ -187,3 +187,4 @@ cython_debug/
 
 # all the insides of md_trajectory
 md_trajectory/
+scripts/qmmm_results/
