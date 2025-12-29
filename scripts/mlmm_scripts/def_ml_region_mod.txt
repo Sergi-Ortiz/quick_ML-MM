@@ -1,0 +1,7 @@
+'def_ml_region_mod.py' is the same script 'def_ml_region.py' from mlmm-toolkit 
+but includes extra capabilities in designing the ML region. 
+
+Instructions
+1. Go to `.../miniconda3/envs/mlmm/lib/python3.11/site-packages/mlmm/`
+2. Locate `def_ml_region.py` and replace it with `def_ml_region_mod.py`
+3. Change back the name of the modified file to `def_ml_region.py`

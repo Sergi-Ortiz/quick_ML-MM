@@ -1,0 +1,4 @@
+def_ml_region -r complex.pdb -c ligand.pdb -o ml_region_v2.pdb --radius_ml 3.5 --radius_het 3.5 --include_H2O false --exclude_backbone true
+
+# customized def_ml_region.py script adds particular residues. 
+# TODO: ADD THIS TO THE COMMAND LINE (and automatize getting the H_HD1...
