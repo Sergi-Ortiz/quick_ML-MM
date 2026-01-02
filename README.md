@@ -1,22 +1,30 @@
-# __quick-MLMM__
+# __quick-ML/MM__
 This repository contains scripts to quickly:
 
-1. **Extract precatalytic frames** from any given MD trajectory. 
+1. **🧬 Extract precatalytic frames** from any given MD trajectory. 
 
-2. **Set up ML/MM calculations** via [ML/MM-toolkit]() to quickly locate a plausible TS. This gpu-accelerated implementation is restricted to using UMA models. 
+2. **⚡️ Set up ML/MM calculations** and analyze its results. These are performed via [mlmm-toolkit](https://github.com/t-0hmura/mlmm_toolkit/tree/main), which use UMA models as MLIP theory and any other FF for the MM region (currently only AMBER FFs are supported). The ML/MM implementation is fully GPU-accelerated. 
 
-3. **Set up QM/MM calculations** via ChemShell given its corresponding scripts. 
+3. **🔬 Set up QM/MM calculations** and analyze its results. These are performed via ChemShell. 
 
-4. **Validate and compare ML/MM calculations** comparing their result on the respective QM/MM result.  (TODO) 
+4. **🎯 Set up a directed-QM/MM workflow** using ML/MM in combination with QM/MM calculations to accelerate the quantitative study of enzyme kinetics [TODO].  
 
-## __Workflow__
+Alternatively, this repo can also be used to easily set up ML/MM calculations for any system given an initial MD trajectory.  
+
+## Workflow overview
+
+One of the main objective of this repo is to provide the scripts necessary to *quickly set up QM/MM and ML/MM calculations from a MD trajectory*. 
+
+> Currently only AMBER MD format is supported. CHARMM and GROMACS support will be implemented in the future. 
+
+The workflow is as follows. 
+1. First, the trajectory is analyzed and precatalytic frames are extracted given a structural condition (`extract_precatalytic.py`). 
+2. Each frame is trimmed and parametrized for both QM/MM and ML/MM calculations (`prepare_frames.py`). 
+3. QM/MM or ML/MM jobs are built for each extracted frame from a set of common templates (`setup_qmmm.py` and `setup_mlmm.py`, respectively). 
 
 
-The objective of this repo is to provide the scripts necessary to quickly set up QM/MM and ML/MM calculations from a MD trajectory. The only MD format supported is AMBER.
+This routine automatically extracts any given number of frames from the MD trajectory and provides the essential files (structure `complex.pdb`, coordinates `complex.inpcrd`, topology `complex.prmtop`) required for both QM/MM and ML/MM, as well as to automatically extract the QM region / ML region for easy and reproducible calculation setup. 
 
-First, the trajectory is analyzed and precatalytic frames are extracted given a structural condition (`extract_precatalytic.py`). Each frame is then trimmed and parametrized for QM/MM and ML/MM calculations (`prepare_frames.py`). From there, QM/MM or ML/MM jobs are built for each extracted frame from a set of commont templates (`setup_qmmm.py` and `setup_mlmm.py`, respectively). 
-
-This routine only requires the complex structure, `frame.pdb`, its coordinates, `frame.inpcrd` and its topology `frame.prmtop` (additionally, the  QM region `.act_list` for QM/MM and  ML region `ml_region.pdb` for ML/MM). The objective is to prepare the simulations quickly and in a reproductible manner. 
 
 ```
 base_dir (where QM/MM or ML/MM calculations are to be prepared)
@@ -51,13 +59,14 @@ base_dir (where QM/MM or ML/MM calculations are to be prepared)
         └── <job>.yaml
 ```
 
+---
 
+## ML/MM calculations
+A detailed workflow example and tutorial is provided in `mlmm_example/` to familiarize the user with ML/MM calculations via `mlmm-toolkit`. The calculations can either be run on a local conda venv with `mlmm-toolkit` installed or in a SLURM environment. 
 
-
-
-
-## __Script description__
-General scripts
+---
+## Script description
+Extraction of precatalytic frames from a MD trajectory. 
 - `extract_precatalytic.py`. Contains the structural conditions to define precatalytic frames and extracts them. **System dependent.**
     - Example command to extract 1 precatalytic structures from a MD run with ALOX15/5-HETE @ H10 with precatalytic definition of 4Å distance and dihedral angle of 10 degrees `python extract_precatalytic.py -m 5-HETE -H 10 -d 4.0 -l 20.0 -n 1 -e 1`. The `-e 1` flag asks to extract frame `1` necessarily. 
 
@@ -65,21 +74,23 @@ Preprocessing scripts (in `preprocessing_scripts`)
 - `prepare_frames.py`. Trims all extracted frames (mainly the solvent) and parametrizes the new system with `tleap` (reparametrization step). Trimmed newly parametrized frames are stored in `frame_parametrization`. Finally, it extracts relevant files for both QM/MM and ML/MM calculations, storing them in `QM-MM` and `ML-MM` directories with their respective QM/MM or ML/MM scripts.
     - Example command `python prepare_frames.py -H 10 -m 5-HETE` will preprocess all previously extracted frames for an abstraction of H10 of ALOX15/5-HETE.
 
-QM/MM scripts (in `qmmm_scripts`)
+QM/MM automatization scripts (in `qmmm_scripts`)
 - `setup_qmmm.py`. Sets up OPT, SCAN and TS jobs for all frames in `QM-MM` directory. This was automated as part of the final BSc thesis in Chemistry. 
 - `QM/MM-specific scripts`. These are all the files required for setting up proper OPT, SCAN and TS jobs with ChemShell. Created during the final BSc thesis in Chemistry.
 
-ML&MM scripts (in `mlmm_scripts`)
+ML/MM automatization scripts (in `mlmm_scripts`)
 - `setup_mlmm.py`. Sets up the ML/MM region and the specific OPT, SCAN and TS jobs via [ML/MM-toolkit](). 
 
-- `ML/MM-scpecific sripts`. These files are the templates needed to build the optimizations, scans, GSM calculations and TS searches. 
+- `ML/MM-scpecific sripts`. These files are the job configuration files to perform the optimizations, scans, GSM calculations, TS searches, IRC scans, etc. with `mlmm-toolkit`.
 
-## __Dependencies__
+---
+## Dependencies
+There are three main groups of scripts that require different software in order to be used. 
 - **Frame extraction and preprocessing.** Requires a machine with AMBER CLI tools installed and a conda venv with EMDA version `easymda==1.0.0a5` to perform the precatalytic structure analysis and its extraction. 
 
-- **QM/MM job setup.** No special requirements. 
+- **QM/MM job setup.** QM/MM calculations are performed with ChemShell in a SLURM environment. No special requirements to use QM/MM preprocessing scripts. 
 
-- **ML/MM job setup.** Requires a conda venv with `mlmm-toolkit` (latest version), `cuda/pytorch` installed correctly, and `FAIRChem` (UMA model) installed and set up. 
+- **ML/MM job setup.** The ML/MM calculations can be performed with `mlmm-toolkit` either as a local conda venv or in a SLURM environment. The installation is detailed in `mlmm_example/installation.md`. No special requirements to use ML/MM preprocessing scripts.  
 
 
 ### __TODO__

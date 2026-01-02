@@ -187,4 +187,5 @@ cython_debug/
 
 # all the insides of md_trajectory
 md_trajectory/
+mlmm_example/LOX/*
 scripts/qmmm_results/
